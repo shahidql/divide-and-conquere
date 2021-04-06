@@ -1,4 +1,5 @@
 var MAPPINGS = [];
+var index = 0;
 function backtrack (item, reference, key, index, hasParent) => {
       if (item && typeof item === 'object' && !Array.isArray(item)) {
         return divide(Object.keys(item), item, key, index, true);
@@ -38,18 +39,10 @@ function backtrack (item, reference, key, index, hasParent) => {
         return divide(_item, _item, _calculatedKey, Array.isArray(reference[item[0]]) ? reference[item[0]].length : null);
       }
 
-      else if(item && (typeof item !== 'object' || typeof item === 'number') && item === 'VariationContainer') { 
+      else if(item && (typeof item !== 'object' || typeof item === 'number') && item === 'STATUS') { 
         let _ID_;
         const _key_ = key.substr(0, key.length-1);
-        const _parentReferencePath = _key_.replace(/.sys\.contentType\.sys\.id/, () => '');
-        const _parentRef_ = get(content, _parentReferencePath);
-        let container = (get(_parentRef_, 'fields.variations') as any);
-        if (has(_parentRef_,'fields.experimentId') && !!container) {
-          _ID_ = get(content, `${_parentReferencePath}.fields.experimentId`);
-          let { VariationMap, CalculatedIndex, Mbox } = this.AB2ContentfulDataMap(_parentRef_);
-          container = container && container[0].sys.contentType.sys.id;
-          MAPPINGS[_ID_] = {path:_parentReferencePath, domIndex: this.getDomIndex(_parentReferencePath), type: item, container: container, mbox: Mbox, default: CalculatedIndex,  variations: VariationMap};
-        }
+        MAPPINGS[index++] = {path:_key_};
         return '';
       }
     }
