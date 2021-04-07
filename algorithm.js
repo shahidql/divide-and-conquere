@@ -1,6 +1,6 @@
 var MAPPINGS = [];
 var index = 0;
-function backtrack (item, reference, key, index, hasParent) => {
+function backtrack (item, reference, key, index, hasParent) {
       if (item && typeof item === 'object' && !Array.isArray(item)) {
         return divide(Object.keys(item), item, key, index, true);
       }
@@ -48,4 +48,3 @@ function backtrack (item, reference, key, index, hasParent) => {
     }
     
     divide(content, content, '', '')
-    return MAPPINGS;
